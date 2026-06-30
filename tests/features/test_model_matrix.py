@@ -1,6 +1,6 @@
 import pandas as pd
 
-from src.features.model_matrix import build_prediction_matrix, build_training_matrix
+from src.features.matrix import build_prediction_matrix, build_training_matrix
 
 
 def feature_frame():
