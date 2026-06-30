@@ -7,7 +7,7 @@ data:
 	python -m src.data.sample_data
 
 backtest:
-	@echo "backtest is added in P1 Task 5 after metrics and baseline are implemented"
+	python -m src.evaluation.run_backtest
 
 app:
 	python app/streamlit_app.py
