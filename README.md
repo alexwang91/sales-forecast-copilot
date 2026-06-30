@@ -19,9 +19,9 @@
 
 ## 当前状态
 
-**阶段：方案设计（Design）。** 本仓库目前只包含设计与边界文档，**尚未编写实现代码**——这是刻意的。
-我们遵循"先定方案边界、再写实现"的原则。在 [`docs/09-open-questions-for-stakeholders.md`](docs/09-open-questions-for-stakeholders.md)
-中的关键边界问题（尤其是 sell-out 数据可得性）得到确认之前，不进入编码阶段。
+**阶段：方案设计完成，待进入 P1 编码。** 关键边界问题 A1/A2/B1 已确认（见 [`docs/09`](docs/09-open-questions-for-stakeholders.md) 顶部）：
+sell-out 干净可得、库存可得、模型训练由内部 AI 承担、现状基线为 GTM 的 8 周移动平均 + 经验。
+开发计划见 [`docs/10-development-plan.md`](docs/10-development-plan.md)（按"数据 → 评估 → 模型 → 界面 → 业务 → 场景 → 试点"的构建顺序）。
 
 ---
 
@@ -38,7 +38,8 @@
 | [`docs/06-evaluation-trust-and-override-loop.md`](docs/06-evaluation-trust-and-override-loop.md) | FVA、指标体系、人工 override 审计闭环 | 高层 / 业务 |
 | [`docs/07-dashboard-and-agent.md`](docs/07-dashboard-and-agent.md) | 5 个 Dashboard 页面、Agent 的硬性护栏 | 业务 / 技术 |
 | [`docs/08-roadmap-and-mvp.md`](docs/08-roadmap-and-mvp.md) | 按"信任里程碑"而非功能堆叠排期的路线图 | 所有人 |
-| [`docs/09-open-questions-for-stakeholders.md`](docs/09-open-questions-for-stakeholders.md) | 编码前必须和干系人敲定的边界问题 | 所有人 |
+| [`docs/09-open-questions-for-stakeholders.md`](docs/09-open-questions-for-stakeholders.md) | 编码前必须和干系人敲定的边界问题（A1/A2/B1 已确认） | 所有人 |
+| [`docs/10-development-plan.md`](docs/10-development-plan.md) | **开发计划**：按构建顺序的任务分解、阶段 DoD、Model 可插拔接口 | 技术 / PM |
 | [`docs/REVIEW-of-openai-plan.md`](docs/REVIEW-of-openai-plan.md) | 对 OpenAI 原始方案的逐点评审：同意什么、改什么、为什么 | 决策记录 |
 
 ---
