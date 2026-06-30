@@ -1,6 +1,24 @@
 import pandas as pd
 
 
+FORECAST_COLUMNS = [
+    "forecast_run_id",
+    "run_date",
+    "forecast_week",
+    "region",
+    "country",
+    "channel",
+    "sku",
+    "target",
+    "p10",
+    "p50",
+    "p90",
+    "model_name",
+    "scenario_name",
+    "horizon",
+]
+
+
 class EventLiftBaseline:
     name = "EventLiftBaseline"
 
@@ -24,5 +42,20 @@ class EventLiftBaseline:
         future = future_covariates.head(horizon).reset_index(drop=True)
         for index, row in future.iterrows():
             value = self.event if bool(row[self.flag_column]) else self.normal
-            rows.append({"p50": value, "model_name": self.name})
-        return pd.DataFrame(rows)
+            rows.append({
+                "forecast_run_id": "event-lift",
+                "run_date": self.as_of,
+                "forecast_week": pd.Timestamp(row["forecast_week"]).date(),
+                "region": row["region"],
+                "country": row["country"],
+                "channel": row["channel"],
+                "sku": row["sku"],
+                "target": self.target,
+                "p10": value * 0.9,
+                "p50": value,
+                "p90": value * 1.1,
+                "model_name": self.name,
+                "scenario_name": self.scenario_name,
+                "horizon": index + 1,
+            })
+        return pd.DataFrame(rows).loc[:, FORECAST_COLUMNS]
