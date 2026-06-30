@@ -1,4 +1,5 @@
 import pandas as pd
+import pytest
 
 from src.models.candidate import EventLiftBaseline
 
@@ -55,3 +56,18 @@ def test_event_lift_model_outputs_forecast_schema():
     assert out.loc[0, "horizon"] == 1
     assert out.loc[1, "horizon"] == 2
     assert out.loc[0, "model_name"] == "EventLiftBaseline"
+
+
+def test_event_lift_model_requires_fit_before_predict():
+    model = EventLiftBaseline(flag_column="event_flag")
+
+    with pytest.raises(RuntimeError):
+        model.predict(1, future_covariates=future_frame())
+
+
+def test_event_lift_model_requires_future_covariates():
+    model = EventLiftBaseline(flag_column="event_flag")
+    model.fit(train_frame(), as_of="2024-01-08")
+
+    with pytest.raises(ValueError):
+        model.predict(1)
