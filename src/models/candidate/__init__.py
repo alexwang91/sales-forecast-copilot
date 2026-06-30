@@ -38,6 +38,10 @@ class EventLiftBaseline:
         self.event = float(event.mean()) if len(event) else self.normal
 
     def predict(self, horizon, future_covariates=None):
+        if self.as_of is None:
+            raise RuntimeError("fit must be called before predict")
+        if future_covariates is None:
+            raise ValueError("future_covariates is required")
         rows = []
         future = future_covariates.head(horizon).reset_index(drop=True)
         for index, row in future.iterrows():
