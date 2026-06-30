@@ -6,6 +6,7 @@ import pandas as pd
 
 
 SERIES_COLUMNS = ["country", "channel", "sku"]
+WEEKLY_JOIN_COLUMNS = ["week_start", *SERIES_COLUMNS]
 
 
 @dataclass(frozen=True)
@@ -33,11 +34,16 @@ def build_time_features(sales: pd.DataFrame, config: FeatureConfig | None = None
 
 def build_model_frame(sales: pd.DataFrame, inventory=None, price_promo=None, products=None, channels=None, config: FeatureConfig | None = None) -> pd.DataFrame:
     frame = build_time_features(sales, config)
+    if inventory is not None:
+        inventory_frame = inventory.copy()
+        inventory_frame["week_start"] = pd.to_datetime(inventory_frame["week_start"])
+        keep = ["week_start", *SERIES_COLUMNS, "channel_inventory", "stock_available", "weeks_of_cover", "stockout_flag"]
+        frame = frame.merge(inventory_frame.loc[:, [column for column in keep if column in inventory_frame.columns]], on=WEEKLY_JOIN_COLUMNS, how="left")
     if price_promo is not None:
         promo = price_promo.copy()
         promo["week_start"] = pd.to_datetime(promo["week_start"])
         keep = ["week_start", *SERIES_COLUMNS, "retail_price", "dealer_price", "discount_rate", "promotion_flag", "promotion_type"]
-        frame = frame.merge(promo.loc[:, [column for column in keep if column in promo.columns]], on=["week_start", *SERIES_COLUMNS], how="left")
+        frame = frame.merge(promo.loc[:, [column for column in keep if column in promo.columns]], on=WEEKLY_JOIN_COLUMNS, how="left")
     if products is not None:
         frame = frame.merge(products, on="sku", how="left")
     if channels is not None:
