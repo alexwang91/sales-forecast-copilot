@@ -6,7 +6,7 @@ from src.runs.fva_report import build_fva_report
 def test_build_fva_report_compares_system_gtm_and_manual_against_actuals():
     tracking = pd.DataFrame([
         {"sku": "S1", "forecast_week": "2024-01-08", "system_p50": 100, "gtm_8w_ma": 80, "manual_forecast": 90},
-        {"sku": "S2", "forecast_week": "2024-01-08", "system_p50": 50, "gtm_8w_ma": 30, "manual_forecast": 40},
+        {"sku": "S2", "forecast_week": "2024-01-08", "system_p50": 50, "gtm_8w_ma": 10, "manual_forecast": 30},
     ])
     actuals = pd.DataFrame([
         {"sku": "S1", "forecast_week": "2024-01-08", "actual": 100},
